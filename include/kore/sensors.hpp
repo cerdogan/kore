@@ -42,6 +42,9 @@ namespace Krang {
 class FT {
 public:
 
+	// try to fix Eigen
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
 	/// Indicates which type of gripper is after the f/t sensor which affects the mass and com
 	enum GripperType { GRIPPER_TYPE_ROBOTIQ = 0, GRIPPER_TYPE_SCHUNK, GRIPPER_TYPE_NONE };
 
@@ -78,6 +81,9 @@ public:
 /* ******************************************************************************************** */
 class SpaceNav {
 public:
+
+	// try to fix Eigen
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
 	/// The constructor. Opens ach channel and initializes the cache.
 	SpaceNav(somatic_d_t* daemon_cx, char* chan_name, double cache_timeout);

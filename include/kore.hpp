@@ -44,6 +44,9 @@ namespace Krang {
 class Hardware {
 public:
 
+	// try to fix Eigen
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
 	/// The indicators for the motor groups to be used
 	enum Mode {
 		MODE_AMC = 1,
