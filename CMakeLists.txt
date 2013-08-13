@@ -35,6 +35,14 @@ file(GLOB headers-kore "include/kore/*.hpp")
 install(FILES ${headers} DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
 install(FILES ${headers-kore} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/kore)
 
+# Create a specific target to install the configuration files for the Krang and object model
+add_custom_target(install-config
+	COMMAND rm -rf /etc/kore
+	COMMAND mkdir /etc/kore 
+	COMMAND cp -r ../etc/model /etc/kore/
+	COMMAND cp -r ../etc/objects /etc/kore/
+)
+
 # set up cpack
 set(CPACK_PACKAGE_NAME "kore")
 set(CPACK_SYSTEM_NAME "i386")
@@ -44,7 +52,7 @@ endif()
 set(CPACK_PACKAGE_VERSION_MAJOR 0)
 set(CPACK_PACKAGE_VERSION_MINOR 0)
 set(CPACK_PACKAGE_VERSION_PATCH 3)
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libach-dev, libamino-dev, libprotobuf-c0, libncurses5")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libach-dev, libamino-dev, libncurses5")
 
 set(CPACK_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}_${CPACK_PACKAGE_VERSION}_${CPACK_SYSTEM_NAME}")

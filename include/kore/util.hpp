@@ -94,14 +94,14 @@ typedef Eigen::Matrix<double, 6, 6> Matrix6d;			///< A typedef for convenience t
 #define pm(a) std::cout << #a << ":\n " << fix((a).matrix()) << "\n" << std::endl
 #define pmr(a) std::cout << #a << ":\n " << fix((a)) << "\n" << std::endl
 #define parm (cout << llwa.pos[0] << ", " << llwa.pos[1] << ", " << llwa.pos[2] << ", " << \
-              llwa.pos[3] << ", " << llwa.pos[4] << ", " << llwa.pos[5] << ", " << llwa.pos[6] << endl);
+          llwa.pos[3] << ", " << llwa.pos[4] << ", " << llwa.pos[5] << ", " << llwa.pos[6] << endl);
 #define darm (cout << "dq: "<<llwa.vel[0] << ", " <<llwa.vel[1] << ", " << llwa.vel[2] << ", " << \
-              llwa.vel[3] << ", " << llwa.vel[4] << ", " << llwa.vel[5] << ", " << llwa.vel[6] << endl);
+          llwa.vel[3] << ", " << llwa.vel[4] << ", " << llwa.vel[5] << ", " << llwa.vel[6] << endl);
 #define eig7(x) (Vector7d() << (x)[0], (x)[1], (x)[2], (x)[3], (x)[4], (x)[5], (x)[6]).finished()
 
 /* ********************************************************************************************* */
-// as above, but nicely formatted. Prints fixed-point, fixed-width,
-// and fixed-precision for perfectly aligned columns and no exponents.
+// as above, but nicely formatted. Prints fixed-point, fixed-width, and fixed-precision for 
+// aligned columns and no exponents.
 #define DISPLAY_VECTOR(VEC)                                             \
 	{std::cout << std::setw(25) << std::left << #VEC; \
 			for(int i = 0; i < VEC.size(); i++) std::cout << std::fixed << std::setw(12) << VEC[i]; \
@@ -117,7 +117,6 @@ typedef Eigen::Matrix<double, 6, 6> Matrix6d;			///< A typedef for convenience t
 			} \
 			std::cout << std::endl; }
 
-
-
+/* ********************************************************************************************* */
 };	// end of namespace
 
