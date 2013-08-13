@@ -57,32 +57,32 @@ namespace Krang {
 // Useful math operations
 
 /// Converts a 4x4 homogeneous transform to a 6D euler with the given order for RPY.
-	Eigen::VectorXd transformToEuler(const Eigen::MatrixXd &T, math::RotationOrder _order);
+Eigen::VectorXd transformToEuler(const Eigen::MatrixXd &T, dart_math::RotationOrder _order);
 
 /// Converts a 6D euler to a 4x4 homogeneous transform with the given order for RPY.
-	Eigen::MatrixXd eulerToTransform(const Eigen::VectorXd &V, math::RotationOrder _order);
+Eigen::MatrixXd eulerToTransform(const Eigen::VectorXd &V, dart_math::RotationOrder _order);
 
 /* ******************************************************************************************** */
 /// The indicator for the left or right side	
-	enum Side {
-		LEFT = 0,
-		RIGHT = 1
-	};
+enum Side {
+	LEFT = 0,
+	RIGHT = 1
+};
 
 /* ******************************************************************************************** */
 // IDs for the dart kinematic structure
 
-	extern std::vector <int> left_arm_ids;			///< Ids for left arm 
-	extern std::vector <int> right_arm_ids;			///< Ids for right arm
-	extern std::vector <int> imuWaist_ids;			///< Ids for waist/imu
+extern std::vector <int> left_arm_ids;			///< Ids for left arm 
+extern std::vector <int> right_arm_ids;			///< Ids for right arm
+extern std::vector <int> imuWaist_ids;			///< Ids for waist/imu
 
-	extern std::vector <int> dart_root_dof_ids;        ///< Ids for the root position/orientation dofs in DART
+extern std::vector <int> dart_root_dof_ids;        ///< Ids for the root position/orientation dofs in DART
 
 /* ******************************************************************************************** */
 // TODO: these should be in the Eigen namespace, not the Krang namespace.
-	typedef Eigen::Matrix<double, 6, 1> Vector6d;			///< A typedef for convenience to contain f/t values
-	typedef Eigen::Matrix<double, 7, 1> Vector7d;			///< A typedef for convenience to contain joint values
-	typedef Eigen::Matrix<double, 6, 6> Matrix6d;			///< A typedef for convenience to contain wrenches
+typedef Eigen::Matrix<double, 6, 1> Vector6d;			///< A typedef for convenience to contain f/t values
+typedef Eigen::Matrix<double, 7, 1> Vector7d;			///< A typedef for convenience to contain joint values
+typedef Eigen::Matrix<double, 6, 6> Matrix6d;			///< A typedef for convenience to contain wrenches
 
 /* ******************************************************************************************** */
 // Useful macros

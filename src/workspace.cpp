@@ -34,7 +34,7 @@
 
 #include "kore/workspace.hpp"
 #include "kore/display.hpp"
-#include <amino/math.h>
+#include <amino.h>
 
 namespace Krang {
 
@@ -69,8 +69,32 @@ namespace Krang {
 	/* ******************************************************************************************** */
 	void WorkspaceControl::integrateWSVelocityInput(const Eigen::VectorXd& xdot, const double dt) {
 
+		// // feed all this through amino
+		// Eigen::Quaternion<double> old_ref_orientation(Tref.topLeftCorner<3,3>());
+		// Eigen::Vector3d old_ref_translation(Tref.topRightCorner<3,1>());
+
+		// double old_ref_asduqu[8];
+		// double old_ref_orientation_arr[4] = {old_ref_orientation.x(),
+		//                                      old_ref_orientation.y(),
+		//                                      old_ref_orientation.z(),
+		//                                      old_ref_orientation.w()};
+		// aa_tf_qv2duqu(old_ref_orientation_arr, old_ref_translation.data(), old_ref_asduqu);
+
+		// double new_ref_asduqu[8];
+		// aa_tf_duqu_svel(old_ref_asduqu, xdot.data(), dt, new_ref_asduqu);
+
+		// double new_ref_translation_arr[3];
+		// aa_tf_duqu_trans(new_ref_asduqu, new_ref_translation_arr);
+		// Eigen::Vector3d new_ref_translation(new_ref_translation_arr);
+
+		// Eigen::Quaternion<double> new_ref_orientation(new_ref_asduqu);
+
+		// Tref.topRightCorner<3,1>() = new_ref_translation;
+		// Tref.topLeftCorner<3,3>() = new_ref_orientation.toRotationMatrix();		
+
 		// Represent the workspace velocity input as a 4x4 homogeneous matrix
-		Eigen::Matrix4d xdotM = eulerToTransform(xdot * dt, math::XYZ);
+		Krang::Vector6d dx = xdot * dt;
+		Eigen::Matrix4d xdotM = eulerToTransform(dx, dart_math::XYZ);
 	
 		// Compute the displacement in the end-effector frame with a similarity transform
 		Eigen::Matrix4d R = Tref;
@@ -92,7 +116,7 @@ namespace Krang {
 		// Apply the similarity transform to the displacement between current transform and reference
 		Eigen::Matrix4d Tdisp = Tcur.inverse() * Tref;
 		Eigen::Matrix4d xdotM = Rcur * Tdisp * Rcur.inverse();
-		xdot = transformToEuler(xdotM, math::XYZ) * K_posRef_p;
+		xdot = transformToEuler(xdotM, dart_math::XYZ) * K_posRef_p;
 	}
 
 	/* ******************************************************************************************** */

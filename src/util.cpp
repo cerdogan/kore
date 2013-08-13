@@ -59,14 +59,14 @@ namespace Krang {
 	std::vector<int> dart_root_dof_ids(dart_root_dof_ids_a, dart_root_dof_ids_a + 6);
 
 /* ******************************************************************************************** */
-	Eigen::VectorXd transformToEuler(const Eigen::MatrixXd &T, math::RotationOrder _order) {
+	Eigen::VectorXd transformToEuler(const Eigen::MatrixXd &T, dart_math::RotationOrder _order) {
 
 		// Extract the translation
 		Eigen::Vector3d posV = T.topRightCorner<3,1>();
 
 		// Convert the rotation matrix into the RPY representation
 		Eigen::Matrix3d rotM = T.topLeftCorner<3,3>();
-		Eigen::Vector3d rotV = math::matrixToEuler(rotM, _order);
+		Eigen::Vector3d rotV = dart_math::matrixToEuler(rotM, _order);
 
 		// Pack into a 6D config vector
 		Eigen::VectorXd V(6);
@@ -75,14 +75,14 @@ namespace Krang {
 	}
 
 /* ******************************************************************************************** */
-	Eigen::MatrixXd eulerToTransform(const Eigen::VectorXd &V, math::RotationOrder _order) {
+	Eigen::MatrixXd eulerToTransform(const Eigen::VectorXd &V, dart_math::RotationOrder _order) {
 
 		// Extract the translation
 		Eigen::Vector3d posV; posV << V[0], V[1], V[2];
 
 		// Extract the rotation and make a matrix out of it
 		Eigen::Vector3d rotV; rotV << V[3], V[4], V[5];
-		Eigen::Matrix3d rotM = math::eulerToMatrix(rotV, _order);
+		Eigen::Matrix3d rotM = dart_math::eulerToMatrix(rotV, _order);
 
 		// Pack the values in a 4x4 matrix
 		Eigen::MatrixXd T(4,4);
