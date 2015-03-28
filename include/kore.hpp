@@ -46,15 +46,16 @@ public:
 
 	/// The indicators for the motor groups to be used
 	enum Mode {
-		MODE_AMC = 1,
-		MODE_LARM = 2,
-		MODE_RARM = 4,
-		MODE_TORSO = 8,
-		MODE_WAIST = 16,
-		MODE_GRIPPERS = 32,													///< Indicates the robotiq grippers (default)
-		MODE_GRIPPERS_SCH = 64,											///< Indicates the schunk grippers
-		MODE_ALL = MODE_AMC | MODE_LARM | MODE_RARM | MODE_TORSO | MODE_WAIST | MODE_GRIPPERS,
-		MODE_ALL_GRIPSCH = MODE_AMC | MODE_LARM | MODE_RARM | MODE_TORSO | MODE_WAIST | MODE_GRIPPERS_SCH
+		MODE_AMC = 1<<0,
+		MODE_LARM = 1<<1,
+		MODE_RARM = 1<<2,
+		MODE_TORSO = 1<<3,
+		MODE_WAIST = 1<<4,
+		MODE_IMU = 1<<5,
+		MODE_GRIPPERS = 1<<6,								///< Indicates the robotiq grippers (default)
+		MODE_GRIPPERS_SCH = 1<<7,							///< Indicates the schunk grippers
+		MODE_ALL = MODE_AMC | MODE_LARM | MODE_RARM | MODE_TORSO | MODE_WAIST | MODE_IMU | MODE_GRIPPERS,
+		MODE_ALL_GRIPSCH = MODE_AMC | MODE_LARM | MODE_RARM | MODE_TORSO | MODE_WAIST | MODE_IMU | MODE_GRIPPERS_SCH,
 	};
 
 	/// Initializes the interfaces to the motor groups based on the given hardware mode

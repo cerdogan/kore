@@ -6,6 +6,7 @@ cmake_minimum_required(VERSION 2.6)
 project(kore)
 
 # use c++0x
+set(CMAKE_INSTALL_PREFIX /usr)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -std=gnu++0x")
 
 # Guard against in-source builds
