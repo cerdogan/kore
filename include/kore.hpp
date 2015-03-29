@@ -51,14 +51,14 @@ public:
 		MODE_RARM = 1<<2,
 		MODE_TORSO = 1<<3,
 		MODE_WAIST = 1<<4,
-		MODE_IMU = 1<<5,
-		MODE_GRIPPERS = 1<<6,								///< Indicates the robotiq grippers (default)
-		MODE_GRIPPERS_SCH = 1<<7,							///< Indicates the schunk grippers
-		MODE_ALL = MODE_AMC | MODE_LARM | MODE_RARM | MODE_TORSO | MODE_WAIST | MODE_IMU | MODE_GRIPPERS,
-		MODE_ALL_GRIPSCH = MODE_AMC | MODE_LARM | MODE_RARM | MODE_TORSO | MODE_WAIST | MODE_IMU | MODE_GRIPPERS_SCH,
+		MODE_GRIPPERS = 1<<5,								///< Indicates the robotiq grippers (default)
+		MODE_GRIPPERS_SCH = 1<<6,							///< Indicates the schunk grippers
+		MODE_ALL = MODE_AMC | MODE_LARM | MODE_RARM | MODE_TORSO | MODE_WAIST | MODE_GRIPPERS,
+		MODE_ALL_GRIPSCH = MODE_AMC | MODE_LARM | MODE_RARM | MODE_TORSO | MODE_WAIST | MODE_GRIPPERS_SCH,
 	};
 
 	/// Initializes the interfaces to the motor groups based on the given hardware mode
+	/// Reads from IMU and sets the value. Imu is set to ON.
 	Hardware (Mode mode, somatic_d_t* daemon_cx, dynamics::SkeletonDynamics* robot); 
 
 	/// The destructor which sends halt messages to all Schunk modules and 0-velocities to wheels
@@ -70,12 +70,16 @@ public:
 	/// Updates the sensor readings
 	void updateSensors(double dt);
 
+	/* Turn the IMU on or off during the call to updateSensors(). In 
+	off mode, new reading in not taken and last read value of IMU is used.*/
+	void setImuOn();
+	void setImuOff();
+
 	/// Prints the state
 	void printState();
 	void printStateCurses(int row, int col);
 
 private:	
-
 	/// Updates the Dart's kinematics data structures with the latest readings
 	/// This is made private because updateSensors already calls this. A user should not need to call
 	/// it.
@@ -126,6 +130,9 @@ public:
 	somatic_motor_t* torso;								///< Torso motor interface
 	somatic_motor_t* waist;								///< Waist motors interface - only read
 	ach_channel_t* waistCmdChan;					///< Command channel for the waist daemon
+
+private:
+	bool mReadImuFlag;			// whether to update from IMU sensor or not
 };
 
 };	// end of namespace

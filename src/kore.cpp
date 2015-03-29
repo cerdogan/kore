@@ -60,6 +60,7 @@ Hardware::Hardware (Mode mode_, somatic_d_t* daemon_cx_, dynamics::SkeletonDynam
 
 	// Initialize the imu sensor and average the first 500 values
 	initImu();
+	mReadImuFlag = true;
 
 	// Define the pos/vel limits for the motor groups
 	VectorXd lim7 = VectorXd::Ones(7) * 1024.1;
@@ -210,7 +211,7 @@ void Hardware::updateSensors (double dt) {
 	if(mode & MODE_WAIST) somatic_motor_update(daemon_cx, waist);
 
 	// Update the imu
-	if(mode & MODE_IMU) getImu(imu_chan, imu, imuSpeed, dt, kfImu); 
+	if(mReadImuFlag) getImu(imu_chan, imu, imuSpeed, dt, kfImu); 
 
 	// Update the arms
 	if(mode & MODE_LARM) somatic_motor_update(daemon_cx, arms[LEFT]);
@@ -343,6 +344,10 @@ void Hardware::initMotorGroup (somatic_d_t* daemon_cx, somatic_motor_t*& motors,
 	somatic_motor_update(daemon_cx, motors);
 	usleep(1e5);
 }
+
+void Hardware::setImuOn(){ mReadImuFlag = true; }
+
+void Hardware::setImuOff(){ mReadImuFlag = false; }
 
 /* ******************************************************************************************** */
 void Hardware::printState () {
