@@ -217,6 +217,11 @@ void Hardware::updateSensors (double dt) {
 	if(mode & MODE_LARM) somatic_motor_update(daemon_cx, arms[LEFT]);
 	if(mode & MODE_RARM) somatic_motor_update(daemon_cx, arms[RIGHT]);
 
+	if(mode & (MODE_GRIPPERS | MODE_GRIPPERS_SCH)) {
+		somatic_motor_update(daemon_cx, grippers[LEFT]);
+		somatic_motor_update(daemon_cx, grippers[RIGHT]);
+	} 
+
 	// Update the kinematics
 	updateKinematics();
 
