@@ -50,8 +50,22 @@ const double JOINTLIMIT_MAXVEL = 1.0;
 const double JOINTLIMIT_GAIN = 0.01; 
 
 /// The warning and kill limits for current checks
-const double CURRENT_WARN_LIMIT = 10.0; 
-const double CURRENT_KILL_LIMIT = 12.0;
+// const double CURRENT_WARN_LIMIT = 10.0; 
+// const double CURRENT_KILL_LIMIT = 12.0;
+
+/// Warn limits for the modules 
+/* Modules: 			[PRL120, PRL120, PRL100, PRL100, PRL80, PRL80, PRL60]
+ * Nominal currents: 	[5, 5, 4, 4, 3, 3, 2]
+ * Maximum currents: 	[10, 10, 8, 8, 6, 6, 4]
+ */
+// const Eigen::VectorXd CURRENT_WARN_LIMITS = 
+// 	(Eigen::VectorXd(7) << 9.5, 9.5, 7.5, 7.5, 5.5, 5.5, 3.5).finished();
+// const Eigen::VectorXd CURRENT_KILL_LIMITS = 
+// 	(Eigen::VectorXd(7) << 10.2, 10.2, 8.2, 8.2, 6.2, 6.2, 4.2).finished();
+ const Eigen::VectorXd CURRENT_WARN_LIMITS = 
+	(Eigen::VectorXd(7) << 9.5, 9.5, 9.5, 9.5, 9.5, 9.5, 9.5).finished();
+const Eigen::VectorXd CURRENT_KILL_LIMITS = 
+	(Eigen::VectorXd(7) << 12, 12, 12, 12, 12, 12, 12).finished();
 
 /// Monitors the current values and either prints warnings or returns a boolean which indicates the 
 /// program should be stopped immediately

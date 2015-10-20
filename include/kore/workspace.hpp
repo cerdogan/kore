@@ -115,9 +115,14 @@ public:
 
 	/* Set the compliance mode on or off. When compliance mode is on, the 
 	   external forces acting at gripper are taken into consideration while
-	   calculating joint velocity from  taskspace velocites. */
+	   calculating joint velocity from  taskspace reference pose or velocity */
 	void setComplianceOff();
 	void setComplianceOn();
+
+	/* Updates the compliance gains 
+	   translation_gain: [IN] gain for force in x, y and z
+	   orientation_gain: [IN] gain for torque about x, y and z */
+	void updateComplianceGains(double translation_gain, double orientation_gain);
 
 public:
 	// Variables that represent the state of the end-effector or how we can control it
@@ -140,7 +145,7 @@ public:
 	double compliance_orientation_gain;	///< The effect of compliance in the workspace control
 
 public:
-	int mCompliance_mode;	// on or off
+	bool mCompliance_mode;
 
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };

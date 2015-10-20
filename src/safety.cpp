@@ -101,18 +101,18 @@ bool checkCurrentLimits (const Eigen::VectorXd& cur) {
 
 bool checkCurrentLimits (const double* cur, size_t n) {
 	for(size_t i = 0; i < n; i++) {
-		if(fabs(cur[i]) > CURRENT_WARN_LIMIT) {
+		if(fabs(cur[i]) > CURRENT_WARN_LIMITS[i]) {
 			if(doing_curses) {
 			} else {
 				printf("\t\t\tWARNING: Current at module %zu has passed %lf amps: %lf amps\n", i, 	
-				       CURRENT_WARN_LIMIT, cur[i]);
+				       CURRENT_WARN_LIMITS[i], cur[i]);
 			}
 		}
-		if(fabs(cur[i]) > CURRENT_KILL_LIMIT) {
+		if(fabs(cur[i]) > CURRENT_KILL_LIMITS[i]) {
 			if(doing_curses) {
 			} else {
 				printf("\t\t\tStopping because current at module %zu has passed %lf amps: %lf amps\n", i,
-				       CURRENT_KILL_LIMIT, cur[i]);
+				       CURRENT_KILL_LIMITS[i], cur[i]);
 			}
 			return true;
 		}

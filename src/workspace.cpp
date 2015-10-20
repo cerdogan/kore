@@ -133,11 +133,12 @@ namespace Krang {
 		integrateWSVelocityInput(xdot, dt);
 
 		// Compute an xdot for complying with external forces if the f/t values are within thresholds
-		Eigen::VectorXd xdot_comply(6) = Eigen::Zeros(6);
+		Eigen::VectorXd xdot_comply(6);// = Eigen::VectorXd::Zero(6);
+		xdot_comply << 0, 0, 0, 0, 0, 0;
 		if(mCompliance_mode){
 			xdot_comply.topLeftCorner<3,1>() = -ft.topLeftCorner<3,1>() * compliance_translation_gain;
 			xdot_comply.bottomLeftCorner<3,1>() = -ft.bottomLeftCorner<3,1>() * compliance_orientation_gain;
-		}	
+		}
 
 		// Get an xdot out of the P-controller that's trying to drive us to the refernece position
 		Eigen::VectorXd xdot_posref;
@@ -196,8 +197,11 @@ namespace Krang {
 
 		// Compute an xdot for complying with external forces if the f/t values are within thresholds
 		Eigen::VectorXd xdot_comply(6);
-		xdot_comply.topLeftCorner<3,1>() = -ft.topLeftCorner<3,1>() * compliance_translation_gain;
-		xdot_comply.bottomLeftCorner<3,1>() = -ft.bottomLeftCorner<3,1>() * compliance_orientation_gain;
+		xdot_comply << 0, 0, 0, 0, 0, 0;
+		if(mCompliance_mode){
+			xdot_comply.topLeftCorner<3,1>() = -ft.topLeftCorner<3,1>() * compliance_translation_gain;
+			xdot_comply.bottomLeftCorner<3,1>() = -ft.bottomLeftCorner<3,1>() * compliance_orientation_gain;
+		}
 
 		// Get an xdot out of the P-controller that's trying to drive us to the refernece position
 		Eigen::VectorXd xdot_posref;
@@ -209,6 +213,22 @@ namespace Krang {
 		// Compute qdot with the dampened inverse Jacobian, using nullspace projection to achieve our 
 		// secondary goal
 		refJSVelocity(xdot_apply, qdot_secondary, qdot);
+	}
+
+	void WorkspaceControl::setComplianceOn(){
+		mCompliance_mode = true;
+		return;
+	}
+
+	void WorkspaceControl::setComplianceOff(){
+		mCompliance_mode = false;
+		return;
+	}
+
+	void WorkspaceControl::updateComplianceGains(double translation_gain, double orientation_gain){
+		compliance_translation_gain = translation_gain;
+		compliance_orientation_gain = orientation_gain;
+		return;
 	}
 
 };	// end of namespace
