@@ -59,6 +59,9 @@ namespace Krang {
 		
 		// and don't print anything out
 		debug_to_cout = false;
+
+		// turn compliance on
+		mCompliance_mode = true;
 	}
 
 	/* ******************************************************************************************** */
@@ -130,9 +133,11 @@ namespace Krang {
 		integrateWSVelocityInput(xdot, dt);
 
 		// Compute an xdot for complying with external forces if the f/t values are within thresholds
-		Eigen::VectorXd xdot_comply(6);
-		xdot_comply.topLeftCorner<3,1>() = -ft.topLeftCorner<3,1>() * compliance_translation_gain;
-		xdot_comply.bottomLeftCorner<3,1>() = -ft.bottomLeftCorner<3,1>() * compliance_orientation_gain;
+		Eigen::VectorXd xdot_comply(6) = Eigen::Zeros(6);
+		if(mCompliance_mode){
+			xdot_comply.topLeftCorner<3,1>() = -ft.topLeftCorner<3,1>() * compliance_translation_gain;
+			xdot_comply.bottomLeftCorner<3,1>() = -ft.bottomLeftCorner<3,1>() * compliance_orientation_gain;
+		}	
 
 		// Get an xdot out of the P-controller that's trying to drive us to the refernece position
 		Eigen::VectorXd xdot_posref;

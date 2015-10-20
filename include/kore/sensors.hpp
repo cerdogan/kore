@@ -92,6 +92,7 @@ public:
 	/// value for longer than cache_timout seconds, it assumes that the network has actually died and 
 	/// returns a nice, safe zero input.
 	/// TODO Change the interface to cover buttons as well
+	/// Returns 6-vector
 	Eigen::VectorXd updateSpaceNav();
 
 public:

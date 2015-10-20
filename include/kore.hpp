@@ -66,11 +66,9 @@ public:
 
 public:
 	// Updates the sensor readings and the kinematic structure
-
-	/// Updates the sensor readings
 	void updateSensors(double dt);
 
-	/// Prints the state
+	/// Prints the state to stdout
 	void printState();
 	void printStateCurses(int row, int col);
 

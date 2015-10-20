@@ -241,6 +241,21 @@ void Hardware::updateKinematics () {
 	// Update imu and waist values
 	assert((mode & MODE_WAIST) && "This code assumes that the robot at least has the waist modules");
 	double waist_val = (waist->pos[0] - waist->pos[1]) / 2.0;
+
+	/* --- HACKY CODE STARTS HERE --- */
+	// Added by Nehchal J. on Oct 19, 2015.
+	// Why was it added?
+	//   One the waist motor broke and subsequently both waist motors
+	//   were removed from the CAN bus. The waist was fixed at particular angle
+	//   and not moved. Since, CAN communication with both waist modules is
+	//   broken, the function updateSensors() is unable to update the waist value
+	//   correctly.
+	// When can this hack it be removed?
+	// 	 When the broken waist module is repaired and both waist modules are
+	//   connected to CAN bus.
+	waist_val = 2.7034; // radians
+	/* --- HACKY CODE ENDS HERE --- */
+
 	Vector2d imuWaist_vals (-imu + M_PI_2, waist_val);
 	for(int i = 0; i < imuWaist_vals.size(); i++) all_vals[i] = imuWaist_vals[i];
 

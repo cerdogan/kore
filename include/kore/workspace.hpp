@@ -101,7 +101,7 @@ public:
 	/// ft:				[IN] 6-vector of forces and torques
 	/// qdot_secondary: [IN] 7-vector representing the bias
 	/// dt:				[IN] the time step
-	/// qdot:		    [OUT] 6-vector velocity in joint space */
+	/// qdot:		    [OUT] 7-vector velocity in joint space */
 	void updateFromUIPos(const Eigen::MatrixXd& xref, const Eigen::VectorXd& ft,
 											 const Eigen::VectorXd& qdot_secondary, Eigen::VectorXd& qdot);
 
@@ -112,6 +112,12 @@ public:
 	/// Transforms a velocity-space user interface input into a
 	/// workspace velocity
 	Eigen::VectorXd uiInputVelToXdot(const Eigen::VectorXd& ui_vel);
+
+	/* Set the compliance mode on or off. When compliance mode is on, the 
+	   external forces acting at gripper are taken into consideration while
+	   calculating joint velocity from  taskspace velocites. */
+	void setComplianceOff();
+	void setComplianceOn();
 
 public:
 	// Variables that represent the state of the end-effector or how we can control it
@@ -134,6 +140,8 @@ public:
 	double compliance_orientation_gain;	///< The effect of compliance in the workspace control
 
 public:
+	int mCompliance_mode;	// on or off
+
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
