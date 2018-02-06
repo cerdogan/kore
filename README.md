@@ -1,4 +1,4 @@
-The library for interfacing with the Golem Krang robot. The include/kore.hpp includes the main interface mode such as the choice of grippers, the use of the left or the right arm of the robot etc. 
+The library for interfacing with the Golem Krang robot. The include/kore.hpp includes the main interface mode such as the choice of grippers, the use of the left or the right arm of the robot etc. Different classes handle sensor, actuation, kinematics and safety issues. The robot representation is based on the DART library.
 
 Note that this library is based on the Ach interprocess architecture (Dantam et al. '15). The shared-memory interfaces we adopted avoids the head-of-line blocking issue in comparison to TCP/UDP protocols used by ROS.
 
